@@ -33,10 +33,6 @@ class WidgetController @Inject()(cc: MessagesControllerComponents) extends Messa
   // of the "WidgetController" references are inside the .scala file.
   private val postUrl = routes.WidgetController.createWidget
 
-  def index = Action {
-    Ok(views.html.index())
-  }
-
   def listWidgets = Action { implicit request: MessagesRequest[AnyContent] =>
     // Pass an unpopulated form to the template
     Ok(views.html.listWidgets(widgets.toSeq, form, postUrl))
