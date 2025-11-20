@@ -1,10 +1,12 @@
+lazy val secureTypes = RootProject(uri("https://github.com/mdipirro/scala-secure-types.git"))
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
-  //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
+  .dependsOn(secureTypes)
   .settings(
     name := """play-scala-forms-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.16", "3.3.6"),
+    crossScalaVersions := Seq("3.7.3"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
