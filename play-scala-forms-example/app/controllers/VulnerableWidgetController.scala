@@ -1,13 +1,11 @@
 package controllers
 
-import javax.inject.Inject
-
 import models.Widget
-import play.api.data._
-import play.api.i18n._
-import play.api.mvc._
+import play.api.data.*
+import play.api.mvc.*
 
-import scala.collection._
+import javax.inject.Inject
+import scala.collection.*
 
 /**
  * The classic WidgetController using MessagesAbstractController.
@@ -19,8 +17,8 @@ import scala.collection._
  * See https://www.playframework.com/documentation/latest/ScalaForms#Passing-MessagesProvider-to-Form-Helpers
  * for details.
  */
-class WidgetController @Inject()(cc: MessagesControllerComponents) extends MessagesAbstractController(cc) {
-  import WidgetForm._
+class VulnerableWidgetController @Inject()(cc: MessagesControllerComponents) extends MessagesAbstractController(cc) {
+  import WidgetForm.*
 
   private val widgets = mutable.ArrayBuffer(
     Widget("Widget 1", 123),
@@ -31,7 +29,7 @@ class WidgetController @Inject()(cc: MessagesControllerComponents) extends Messa
   // The URL to the widget.  You can call this directly from the template, but it
   // can be more convenient to leave the template completely stateless i.e. all
   // of the "WidgetController" references are inside the .scala file.
-  private val postUrl = routes.WidgetController.createWidget
+  private val postUrl = routes.VulnerableWidgetController.createWidget
 
   def listWidgets = Action { implicit request: MessagesRequest[AnyContent] =>
     // Pass an unpopulated form to the template
@@ -51,7 +49,7 @@ class WidgetController @Inject()(cc: MessagesControllerComponents) extends Messa
       // This is the good case, where the form was successfully parsed as a Data object.
       val widget = Widget(name = data.name, price = data.price)
       widgets += widget
-      Redirect(routes.WidgetController.listWidgets).flashing("info" -> "Widget added!")
+      Redirect(routes.VulnerableWidgetController.listWidgets).flashing("info" -> "Widget added!")
     }
 
     val formValidationResult = form.bindFromRequest()

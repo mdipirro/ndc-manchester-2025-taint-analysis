@@ -1,6 +1,6 @@
 package functional
 
-import controllers.{WidgetController, routes}
+import controllers.{VulnerableWidgetController, routes}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -24,11 +24,11 @@ class FunctionalSpec extends PlaySpec with GuiceOneAppPerSuite with Injecting wi
   // https://www.playframework.com/documentation/latest/ScalaCsrf#Testing-CSRF
   import CSRFTokenHelper._
 
-  "WidgetController" must {
+  "VulnerableWidgetController" must {
 
     "process a POST request successfully" in {
       // Pull the controller from the already running Play application, using Injecting
-      val controller = inject[WidgetController]
+      val controller = inject[VulnerableWidgetController]
 
       // Call using the FakeRequest and the correct body information and CSRF token
       val request = FakeRequest(routes.WidgetController.createWidget)
@@ -43,7 +43,7 @@ class FunctionalSpec extends PlaySpec with GuiceOneAppPerSuite with Injecting wi
     }
 
     "reject a POST request when given bad input" in {
-      val controller = inject[WidgetController]
+      val controller = inject[VulnerableWidgetController]
 
       // Call the controller with negative price...
       val request = FakeRequest(routes.WidgetController.createWidget)
