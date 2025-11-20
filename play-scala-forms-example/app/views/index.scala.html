@@ -1,9 +1,14 @@
 @()
 
-  @main("Welcome to Play") {
-    <div>
-      <ul>
-          <li>Vulnerable widgets: <a href="@routes.VulnerableWidgetController.listWidgets">@routes.VulnerableWidgetController.listWidgets</a></li>
-      </ul>
-    </div>
-  }
+@main("Welcome to Play") {
+<div>
+    <ul>
+        <li>
+            Vulnerable widgets: <a href="@routes.VulnerableWidgetController.listWidgets">@routes.VulnerableWidgetController.listWidgets</a>
+        </li>
+        <li>
+            Secured widgets: <a href="@routes.SecuredWidgetController.listWidgets">@routes.SecuredWidgetController.listWidgets</a>
+        </li>
+    </ul>
+</div>
+}
