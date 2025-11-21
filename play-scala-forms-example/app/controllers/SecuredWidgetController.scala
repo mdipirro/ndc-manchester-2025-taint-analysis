@@ -49,7 +49,8 @@ class SecuredWidgetController @Inject()(cc: MessagesControllerComponents, repo: 
         input <- TaintTracked(rawWidget)
         prefixed <- TaintTracked.unsafe("Demo widget: ")
       } yield input.copy(name = prefixed + input.name)
-      //repo.addWidget(taintedWidget) // THIS DOES NOT COMPILE!
+      // repo.addWidget(taintedWidget) // THIS DOES NOT COMPILE!
+      // repo.addWidget(TaintTracked.unsafe(rawWidget)) // THIS DOES COMPILE!!
       val sanitisedWidget = taintedWidget.sanitise { widget =>
         if widget.name.forall(c => c.isLetterOrDigit || c == ' ' || c == ':') then
           Right(widget)
