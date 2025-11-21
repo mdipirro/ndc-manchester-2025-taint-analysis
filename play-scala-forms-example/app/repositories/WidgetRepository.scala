@@ -1,6 +1,6 @@
 package repositories
 
-import com.mdipirro.security.{TaintLevel, TaintTracked}
+import com.mdipirro.security.{CanOpen, TaintLevel, TaintTracked}
 import models.Widget
 
 import scala.collection.mutable
@@ -14,5 +14,5 @@ class WidgetRepository {
 
   def listWidgets(): TaintTracked[TaintLevel.Pure.type, Seq[Widget]] = TaintTracked.unsafe(widgets.toSeq)
 
-  def addWidget(widget: TaintTracked[TaintLevel.Sanitised.type, Widget]): Unit = widgets += widget.open
+  def addWidget[T <: TaintLevel](widget: TaintTracked[T, Widget])(using CanOpen[T]): Unit = widgets += widget.open
 }
