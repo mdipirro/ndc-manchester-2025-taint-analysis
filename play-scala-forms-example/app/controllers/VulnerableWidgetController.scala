@@ -31,13 +31,13 @@ class VulnerableWidgetController @Inject()(cc: MessagesControllerComponents) ext
   // of the "WidgetController" references are inside the .scala file.
   private val postUrl = routes.VulnerableWidgetController.createWidget
 
-  def listWidgets = Action { implicit request: MessagesRequest[AnyContent] =>
+  def listWidgets: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     // Pass an unpopulated form to the template
     Ok(views.html.listWidgets(widgets.toSeq, form, postUrl))
   }
 
   // This will be the action that handles our form post
-  def createWidget = Action { implicit request: MessagesRequest[AnyContent] =>
+  def createWidget: Action[AnyContent] = Action { implicit request: MessagesRequest[AnyContent] =>
     val errorFunction = { (formWithErrors: Form[Data]) =>
       // This is the bad case, where the form had validation errors.
       // Let's show the user the form again, with the errors highlighted.
