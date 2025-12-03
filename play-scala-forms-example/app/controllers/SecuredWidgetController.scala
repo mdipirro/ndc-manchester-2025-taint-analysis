@@ -43,12 +43,11 @@ class SecuredWidgetController @Inject()(cc: MessagesControllerComponents, repo: 
     val successFunction = { (data: Data) =>
       // This is the good case, where the form was successfully parsed as a Data object.
       val rawWidget = Widget(name = data.name, price = data.price)
-      val taintedWidget = for {
-        input <- TaintTracked(rawWidget)
-        prefixed <- TaintTracked.unsafe("Safe: ")
-      } yield input.copy(name = prefixed + input.name)
+      val taintedWidget = TaintTracked(rawWidget)
+      
       //repo.addWidget(taintedWidget) // THIS DOES NOT COMPILE!
       //repo.addWidget(TaintTracked.unsafe(rawWidget)) // THIS DOES COMPILE!!
+      
       val sanitisedWidget = taintedWidget.sanitise { widget =>
         if widget.name.forall(c => c.isLetterOrDigit || c == ' ' || c == ':') then
           Right(widget)
@@ -61,6 +60,11 @@ class SecuredWidgetController @Inject()(cc: MessagesControllerComponents, repo: 
           repo.addWidget(widget)
           Redirect(routes.SecuredWidgetController.listWidgets).flashing("info" -> "Widget added!")
       }
+      
+      /*val composedWidget = taintedWidget.flatMap { w =>
+        TaintTracked.unsafe(s"A new ${w.name}")
+      }
+      composedWidget.open*/
     }
 
     val formValidationResult = form.bindFromRequest()
