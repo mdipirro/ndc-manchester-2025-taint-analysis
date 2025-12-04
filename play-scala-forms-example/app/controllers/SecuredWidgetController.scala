@@ -45,7 +45,7 @@ class SecuredWidgetController @Inject()(cc: MessagesControllerComponents, repo: 
       //repo.addWidget(TaintTracked.unsafe(rawWidget)) // THIS DOES COMPILE!!
       
       val sanitisedWidget = taintedWidget.sanitise { widget =>
-        if widget.name.forall(c => c.isLetterOrDigit || c == ' ' || c == ':') then
+        if widget.name.forall(c => c.isLetterOrDigit || c == ' ') then
           Right(widget)
         else
           Left("Sanitisation failed: The name of the widget must not contain any special characters.")
